@@ -83,7 +83,7 @@ func main() {
 				}
 				msg = tgbotapi.NewMessage(update.Message.Chat.ID, "The cryptocurrency has been added")
 				bot.Send(msg)
-			case "sendcourse":
+			case "course":
 				var resp string
 				crypto := update.Message.Text
 				if !database.CryptoValidate(crypto) {
@@ -115,11 +115,6 @@ func main() {
 			bot.Send(msg)
 
 		case "launch":
-			//if database.GetActive(update.Message.Chat.ID) == true {
-			//	msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Daily notifications have been already started")
-			//	bot.Send(msg)
-			//	break
-			//}
 			msg, err = responseForm(update.Message.Chat.ID)
 			if err != nil {
 				bot.Send(msg)
@@ -132,15 +127,14 @@ func main() {
 			}, func() bool { return database.GetOk(update.Message.Chat.ID) })
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Daily notifications started successfully")
 			bot.Send(msg)
-			//database.SetActive(update.Message.Chat.ID, true)
 
 		case "stop":
 			database.SetOk(update.Message.Chat.ID, false)
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Daily notifications have been stopped")
 			bot.Send(msg)
 
-		case "sendcourse":
-			activecommand = "sendcourse"
+		case "course":
+			activecommand = "course"
 			msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Write the name of the crypto you want to receive right now")
 			bot.Send(msg)
 		}
