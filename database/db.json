@@ -1,9 +1,10 @@
 [
  {
   "id": 5262798033,
-  "time": "16:18",
+  "time": "1:43",
   "crypto": [
-   "solana"
+   "solana",
+   "bitcoin"
   ],
   "currency": "🇺🇸",
   "ok": true,

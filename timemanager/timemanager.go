@@ -11,12 +11,14 @@ var (
 )
 
 func WaitUntil(tm string, foo func(), checkOk func() bool) {
-	for true {
-		time.Sleep(time.Duration(getWaitingTime(tm)+1) * time.Second)
-		if !checkOk() {
-			break
+	for {
+		if int(getWaitingTime(tm)) == 0 {
+			foo()
+			time.Sleep(1 * time.Second)
 		}
-		foo()
+		if !checkOk() {
+			return
+		}
 	}
 
 }
@@ -30,6 +32,5 @@ func getWaitingTime(tm string) int {
 		temp = temp.AddDate(0, 0, 1)
 
 	}
-	return int(temp.Sub(time.Now()).Seconds())
+	return int(time.Until(temp).Seconds())
 }
- 

@@ -1,15 +1,18 @@
 package cryptocurrencyparser
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
 	"golang.org/x/net/html"
 )
 
+const parsingURL = "https://coinmarketcap.com/currencies/"
+
 func Parse(url string) string {
-	if !strings.HasPrefix(url, "https://coinmarketcap.com/currencies/") {
-		url = "https://coinmarketcap.com/currencies/" + url
+	if !strings.HasPrefix(url, parsingURL) {
+		url = parsingURL + url
 	}
 	resp, _ := http.Get(url)
 	body, _ := html.Parse(resp.Body)
@@ -30,5 +33,7 @@ func Parse(url string) string {
 		}
 	}
 	temp(body)
+	res = strings.ReplaceAll(res, ",", "")
+	fmt.Println(res)
 	return res
 }

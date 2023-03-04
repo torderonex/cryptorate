@@ -93,8 +93,8 @@ func SetTime(chatid int64, tm string) error {
 func AddCrypto(chatid int64, cryptocurrency string) error {
 	cryptocurrency = strings.Replace(cryptocurrency, "https://coinmarketcap.com/currencies/", "", 1)
 	cryptocurrency = strings.Trim(cryptocurrency, "/")
-	if !cryptoValidate(cryptocurrency) {
-		return errors.New("Wrong cryptocurrency name")
+	if !CryptoValidate(cryptocurrency) {
+		return errors.New("wrong cryptocurrency name")
 	}
 	db, err := os.ReadFile(path)
 	if err != nil {
@@ -238,7 +238,7 @@ func isRigtTimeFormat(tm string) bool {
 	return true
 }
 
-func cryptoValidate(crypto string) bool {
+func CryptoValidate(crypto string) bool {
 	crypto = "https://coinmarketcap.com/currencies/" + crypto
 	if resp, err := http.Get(crypto); err != nil || resp.StatusCode != 200 {
 		return false
